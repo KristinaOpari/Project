@@ -2,16 +2,25 @@ from django.db import models
 
 
 class User(models.Model): #Shiko users ne django doc
-    user_id = models.IntegerField(primary_key=True)
+    CHOICES_GENDER=(
+        ('F', 'Female'),
+        ('M', 'Male')
+    )
+    CHOICES_ENABLE=(
+        ('1','Enabled'),
+        ('0', 'Disabled')
+    )
+    user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
-    gender = models.CharField(max_length=10)
-    date_of_birth=models.DateField()
+    gender = models.CharField(max_length=10, choices=CHOICES_GENDER)
+    birthday=models.DateField()
     join_date=models.DateField()
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
-    leave_days_left = models.IntegerField()
-    department_id = models.ForeignKey('Department', on_delete=models.CASCADE)
+    leave_days = models.IntegerField()
+    department = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
+    flag=models.CharField(max_length=4, choices=CHOICES_ENABLE,default='1')
 
 
 class Department(models.Model):
