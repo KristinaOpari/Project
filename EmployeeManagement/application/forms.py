@@ -1,11 +1,11 @@
 from django import forms
-from django.forms import widgets
-
 from .models import *
 
 class DateInput(forms.DateInput):
     input_type = 'date'
-# creating a form
+
+
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -14,4 +14,16 @@ class UserForm(forms.ModelForm):
             'birthday': DateInput(),
             'join_date': DateInput(),
         }
+
+class RolesForm(forms.ModelForm): #Jo e perfunduar !!
+
+    class Meta:
+        model=UserRole
+        exclude=['user_id','user_role_id']
+
+
+class DepartmentForm(forms.ModelForm):
+    class Meta:
+        model=Department
+        exclude=['department_id']
 

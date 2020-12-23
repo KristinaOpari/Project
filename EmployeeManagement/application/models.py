@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class User(models.Model): #Shiko users ne django doc
+class User(models.Model):
     CHOICES_GENDER=(
         ('F', 'Female'),
         ('M', 'Male')
@@ -20,13 +20,33 @@ class User(models.Model): #Shiko users ne django doc
     phone = models.CharField(max_length=255)
     leave_days = models.IntegerField()
     department = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
-    flag=models.CharField(max_length=4, choices=CHOICES_ENABLE,default='1')
+    flag=models.CharField(max_length=4, choices=CHOICES_ENABLE, default='1') #for the deletion part
+
+    def __str__(self):
+        return '%s' % self.name
+
 
 
 class Department(models.Model):
     department_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
-    parentDepartment_id = models.ForeignKey('Department', on_delete=models.CASCADE)
+    parentDepartment_id = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
+    supervisor=models.ForeignKey('UserRole', on_delete=models.CASCADE, default="", blank=True, null=True) #limit_choices_to
+    def __str__(self):
+        return '%s' % self.name
+
+class Role(models.Model):
+    role_id=models.IntegerField(primary_key=True)
+    name=models.CharField(max_length=255)
+    def __str__(self):
+        return '%s' % self.name
+
+
+class UserRole(models.Model):
+    user_role_id=models.IntegerField(primary_key=True)
+    role_id=models.ForeignKey(Role, on_delete=models.CASCADE,default="")
+    user_id=models.ForeignKey(User, on_delete=models.CASCADE, default="")
+
 
 class Leave(models.Model):
     user_id=models.ForeignKey(User, on_delete=models.CASCADE)
@@ -37,15 +57,7 @@ class Leave(models.Model):
     status=models.CharField(max_length=255)
     approver=models.CharField(max_length=255)
 
-class Role(models.Model):
-    role_id=models.IntegerField(primary_key=True)
-    name=models.CharField(max_length=255)
 
-
-class UserRole(models.Model):
-    user_role_id=models.IntegerField(primary_key=True)
-    role_id=models.ForeignKey(Role, on_delete=models.CASCADE)
-    user_id=models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Account(models.Model):
     account_id=models.IntegerField(primary_key=True)
