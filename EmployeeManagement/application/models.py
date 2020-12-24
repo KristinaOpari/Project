@@ -21,6 +21,7 @@ class User(models.Model):
     leave_days = models.IntegerField()
     department = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
     flag=models.CharField(max_length=4, choices=CHOICES_ENABLE, default='1') #for the deletion part
+    roles=models.ManyToManyField('Role')
 
     def __str__(self):
         return '%s' % self.name
@@ -28,10 +29,10 @@ class User(models.Model):
 
 
 class Department(models.Model):
-    department_id = models.IntegerField(primary_key=True)
+    department_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     parentDepartment_id = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
-    supervisor=models.ForeignKey('UserRole', on_delete=models.CASCADE, default="", blank=True, null=True) #limit_choices_to
+    supervisor=models.ForeignKey('User', related_name= "supevisor", on_delete=models.CASCADE, default="", blank=True, null=True,limit_choices_to={"roles":2}) #limit_choices_to
     def __str__(self):
         return '%s' % self.name
 
@@ -41,13 +42,6 @@ class Role(models.Model):
     def __str__(self):
         return '%s' % self.name
 
-
-class UserRole(models.Model):
-    user_role_id=models.IntegerField(primary_key=True)
-    role_id=models.ForeignKey(Role, on_delete=models.CASCADE,default="")
-    user_id=models.ForeignKey(User, on_delete=models.CASCADE, default="")
-
-
 class Leave(models.Model):
     user_id=models.ForeignKey(User, on_delete=models.CASCADE)
     start_date=models.DateField()
@@ -56,8 +50,6 @@ class Leave(models.Model):
     reason=models.CharField(max_length=255)
     status=models.CharField(max_length=255)
     approver=models.CharField(max_length=255)
-
-
 
 class Account(models.Model):
     account_id=models.IntegerField(primary_key=True)

@@ -9,10 +9,6 @@ class RoleAdmin(admin.ModelAdmin):
     list_display = ('role_id','name')
 admin.site.register(Role,RoleAdmin)
 
-class UserRoleAdmin(admin.ModelAdmin):
-    list_display = ('user_role_id','role_id','user_id')
-admin.site.register(UserRole,UserRoleAdmin)
-
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('department_id','name', 'parentDepartment_id', 'supervisor')
+    list_display = ('department_id','name', 'parentDepartment_id')
 admin.site.register(Department,DepartmentAdmin)

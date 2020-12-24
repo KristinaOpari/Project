@@ -7,6 +7,8 @@ class DateInput(forms.DateInput):
 
 
 class UserForm(forms.ModelForm):
+    roles = forms.ModelMultipleChoiceField(queryset=Role.objects, widget=forms.CheckboxSelectMultiple(), required=False)
+
     class Meta:
         model = User
         exclude=['user_id']
@@ -15,15 +17,12 @@ class UserForm(forms.ModelForm):
             'join_date': DateInput(),
         }
 
-class RolesForm(forms.ModelForm): #Jo e perfunduar !!
-
-    class Meta:
-        model=UserRole
-        exclude=['user_id','user_role_id']
 
 
 class DepartmentForm(forms.ModelForm):
     class Meta:
         model=Department
         exclude=['department_id']
+
+
 
