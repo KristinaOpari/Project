@@ -1,26 +1,43 @@
 from django.shortcuts import render
-
-# relative import of forms
 from .models import *
 from .forms import *
+from rest_framework.response import Response
+from .serializer import UserSerializer
+from rest_framework.decorators import api_view,renderer_classes
+from rest_framework.renderers import BrowsableAPIRenderer, TemplateHTMLRenderer
+from rest_framework import viewsets
 
 
-def create_User(request):
-    data = {}
-    form = UserForm(request.POST or None)
+@api_view(['POST'])
+@renderer_classes([BrowsableAPIRenderer])
+def createUser(request):
+    serializer = UserSerializer(data=request.data)
 
-    if form.is_valid():
-        form.save()
-    else:
-        data['form']=form
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
-    return render(request, "create/createUser.html", data)
+@api_view(['GET'])
+@renderer_classes([TemplateHTMLRenderer])
+def showUser(request):
+    query_set=User.objects.all()
+    return Response({'users':query_set},template_name='show_user.html')
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-def create_Department(request):
-    data = {}
-    form = DepartmentForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-    data['form'] = form
-    return render(request, "create/createDepartment.html", data)
+@api_view(['POST'])
+def updateUser(request, pk):
+    user = User.objects.get(id=pk)
+    serializer = UserSerializer(instance=user, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteUser(request, pk):
+    user = User.objects.get(id=pk)
+    user.flag=0
+    return Response("User Deleted Successfully")
