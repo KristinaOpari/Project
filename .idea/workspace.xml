@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c4f4568-ebcf-4a15-a6ec-610ac44c404a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/EmployeeManagement/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/EmployeeManagement/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,10 +51,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="442" y="168" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608761306695">
+    <state x="442" y="168" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609179539070">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="442" y="168" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1608761306695" />
+    <state x="442" y="168" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1609179539070" />
     <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1608658121671">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
