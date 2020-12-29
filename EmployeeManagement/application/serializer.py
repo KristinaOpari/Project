@@ -21,7 +21,7 @@ class RoleSerializer(serializers.ModelSerializer):
         model=Role
         fields='__all__'
 
-class AcountSerializers(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model=Account
         fields='__all__'

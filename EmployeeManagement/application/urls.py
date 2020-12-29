@@ -4,15 +4,10 @@ from . import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-
+router.register(r'users', views.UserViewSet, basename='user')
+router.register(r'departments',views.DepartmentViewSet,basename='department')
+router.register(r'leaves',views.LeaveViewSet,basename='leave')
+router.register(r'accounts',views.AccountViewSet,basename='account')
 urlpatterns=[
-        path(r'create-User/',views.createUser),
-        path(r'update-user/<str:pk>/',views.updateUser),
-        path(r'delete-user/<str:pk>/',views.deleteUser),
-        path(r'show-users/',views.showUser),
         path('',include(router.urls)),
-
-
-
 ]

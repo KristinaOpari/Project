@@ -25,11 +25,10 @@ class User(models.Model):
         return self.name
 
 
-
 class Department(models.Model):
     name = models.CharField(max_length=255)
     parentDepartment_id = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
-    supervisor=models.ForeignKey('User', related_name= "supevisor", on_delete=models.CASCADE, default="", blank=True, null=True,limit_choices_to={"roles":2}) #limit_choices_to
+    supervisor=models.ForeignKey('UserRole', on_delete=models.CASCADE, default="", blank=True, null=True,limit_choices_to={"role_id":2}) #limit_choices_to
     def __str__(self):
         return self.name
 
