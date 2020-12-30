@@ -11,10 +11,18 @@ class DepartmentSerializer(serializers.ModelSerializer):
         model=Department
         fields='__all__'
 
-class LeaveSerializer(serializers.ModelSerializer):
+class LeaveApplySerializer(serializers.ModelSerializer):
+    duration=serializers.ReadOnlyField()
     class Meta:
         model=Leave
         fields='__all__'
+        read_only_fields = ['approver','status']
+
+class LeaveApproveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Leave
+        fields='__all__'
+        read_only_fields=['user_id','start_date','end_date','reason']
 
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,7 +34,7 @@ class AccountSerializer(serializers.ModelSerializer):
         model=Account
         fields='__all__'
 
-class HolidaysSeriializer(serializers.ModelSerializer):
+class HolidaysSerializer(serializers.ModelSerializer):
     class Meta:
         model=Holidays
         fields='__all__'
