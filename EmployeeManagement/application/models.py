@@ -1,5 +1,8 @@
 from django.db import models
 import numpy as np
+from django.core.mail import send_mail
+
+
 class User(models.Model):
     CHOICES_GENDER=(
         ('F', 'Female'),
@@ -19,6 +22,18 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        super(User, self).save(*args, **kwargs)
+        account=Account.objects.create(user_id=self, password="ikub1234")
+        # send_mail(
+        #     'Account Activated',
+        #     'Please activate you account using: Email: ({}) Password:({})'.format(self.email, account.password),
+        #     'noreply@gmail.com',
+        #     ['{}'.format(self.email)],
+        #     fail_silently=False
+        #
+        # )
 
 class Department(models.Model):
     name = models.CharField(max_length=255)

@@ -1,3 +1,4 @@
+
 from rest_framework import serializers
 from .models import *
 
@@ -32,6 +33,11 @@ class RoleSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model=Account
+        fields='__all__'
+
+class UserRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UserRole
         fields='__all__'
 
 class HolidaysSerializer(serializers.ModelSerializer):

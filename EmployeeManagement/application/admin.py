@@ -16,3 +16,7 @@ admin.site.register(Department,DepartmentAdmin)
 class LeaveAdmin(admin.ModelAdmin):
     list_display = ('user_id', 'start','end','duration','status','approver')
 admin.site.register(Leave,LeaveAdmin)
+
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('user_id','password')
+admin.site.register(Account,AccountAdmin)
