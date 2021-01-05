@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Report</title>
+</head>
+<body>
+<div>
+    {% for user in queryset %}
+    <div>
+        <p>{{ user.name }} {{user.surname}} {{user.gender}}</p>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leave Request Report</title>
+</head>
+<body>
+<div>
+    {% for leave in queryset %}
+    <div>
+        <p>{{ leave.user_id.name }} </p>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

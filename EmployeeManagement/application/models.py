@@ -1,20 +1,21 @@
 from django.db import models
 import numpy as np
 from django.core.mail import send_mail
-
+#from django.contrib.auth.models import User
 
 class User(models.Model):
     CHOICES_GENDER=(
         ('F', 'Female'),
         ('M', 'Male')
     )
-
+    #user=models.OneToOneField(User , on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
     gender = models.CharField(max_length=10, choices=CHOICES_GENDER)
     birthday=models.DateField()
     join_date=models.DateField()
-    email = models.CharField(max_length=255, unique=True)
+    primary_email=models.EmailField(unique=True,default="")
+    secondary_email = models.EmailField(unique=True,default="")
     phone = models.CharField(max_length=255)
     leave_days_available = models.IntegerField(default=28)
     department = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
@@ -28,7 +29,7 @@ class User(models.Model):
         account=Account.objects.create(user_id=self, password="ikub1234")
         # send_mail(
         #     'Account Activated',
-        #     'Please activate you account using: Email: ({}) Password:({})'.format(self.email, account.password),
+        #     'Please activate you account using: Email: ({}) Password:({})'.format(self.primary_email, account.password),
         #     'noreply@gmail.com',
         #     ['{}'.format(self.email)],
         #     fail_silently=False
@@ -52,19 +53,17 @@ class UserRole(models.Model):
     user_id=models.ForeignKey(User,on_delete=models.CASCADE,default=1)
 
 class Leave(models.Model):
-    LEAVE_STATUS_APPROVED = 1
-    LEAVE_STATUS_REJECTED = 2
-    LEAVE_STATUS_PENDING = 3
+
     LEAVE_STATUS_CHOICES = (
-        (LEAVE_STATUS_APPROVED, 'approved'),
-        (LEAVE_STATUS_REJECTED, 'rejected'),
-        (LEAVE_STATUS_PENDING, 'pending'),
+        ('A', 'Approved'),
+        ('R','Rejected'),
+        ('P', 'Pending'),
     )
     user_id=models.ForeignKey(User, on_delete=models.CASCADE)
     start=models.DateTimeField()
     end= models.DateTimeField()
     reason=models.CharField(max_length=255)
-    status=models.CharField(max_length=255,blank=True, null=True,choices=LEAVE_STATUS_CHOICES,default=LEAVE_STATUS_PENDING)
+    status=models.CharField(max_length=255,blank=True, null=True,choices=LEAVE_STATUS_CHOICES,default='P')
     approver=models.ForeignKey(User,on_delete=models.CASCADE, related_name='approver',blank=True,null=True)
 
     @property

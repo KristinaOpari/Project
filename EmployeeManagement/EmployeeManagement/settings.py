@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
      'rest_framework',
+'import_export',
     'application'
 ]
 
@@ -128,7 +129,7 @@ REST_FRAMEWORK = {
     ]
 
 }
-
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = "smtp.gmail.com"
