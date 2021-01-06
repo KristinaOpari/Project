@@ -18,5 +18,8 @@ Kristi - Kam akses
 --Po has nje problem ne lidhje me berjen save te password ne db jo si charField. Si mundet ta zgjidh kete problem ose ku mund te orinetohem?
 --Gjithashtu ne lidhje me berjen disable te fundjavave ne kalendar akoma nuk kam gjetur nje zgjidhje.
 
-04/01/2021
+05/01/2021
 -Kam bere disa modifikme vetem ne lidhje me paraqitjen te disa modeleve, per shembull kur kemi te bejme me choice fields te shfaqet vlera dhe jo key. Gjithashtu jam marre me exprotimin ne excel file dhe pdf file te informacionit ne lidhje me userat dhe kerkesat per leje. Per excel file kam perdorur librarin django import-export dhe file resources.py nderkohe qe per pdf file kam perdorur html templates, ku do e modifikoj me vone qe te mund te paraqiten dhe si tabela.
+
+06/01/2021
+-Bera modifikime ne html files qe u perdoren per tu eksportuar ne pdf files ne lidhje me users dhe leaves, ku ne pdf files do te tregohen ne formatin e tabelave.
