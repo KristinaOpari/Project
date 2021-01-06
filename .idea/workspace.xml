@@ -3,19 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5c4f4568-ebcf-4a15-a6ec-610ac44c404a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/EmployeeManagement/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/EmployeeManagement/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/forms.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/migrations/0002_auto_20201230_1201.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/migrations/0003_auto_20201230_1205.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/templates/create/createDepartment.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/templates/create/createUser.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/templates/pdf1.html" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/templates/pdf1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/templates/pdf2.html" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/templates/pdf2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,10 +68,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="7" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1609672577835" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1609846875872">
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1609872039491">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1609846875872" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1609872039491" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1609255743090">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

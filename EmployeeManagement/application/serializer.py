@@ -33,15 +33,9 @@ class LeaveApplySerializer(serializers.ModelSerializer):
         read_only_fields = ['approver','status']
 
 class LeaveApproveSerializer(serializers.ModelSerializer):
-    duration = serializers.ReadOnlyField()
-    user_id = serializers.SlugRelatedField(read_only=True, slug_field='name')
-    approver = serializers.SlugRelatedField(read_only=True, slug_field='name')
-    status = serializers.SerializerMethodField()
-    def get_status(self, obj):
-        return obj.get_status_display()
     class Meta:
         model=Leave
-        fields='__all__'
+        fields=['status','approver']
         read_only_fields=['user_id','start_date','end_date','reason']
 
 class RoleSerializer(serializers.ModelSerializer):

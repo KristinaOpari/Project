@@ -3,14 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>User Report</title>
+
+<style>
+table, th, tr, td {
+  border: 1px solid black;
+  text-align:center;
+}
+th {
+  height: 70px;
+  background-color: orange;
+}
+td{
+height:40px;
+}
+
+
+</style>
 </head>
 <body>
-<div>
+<h1>USER REPORT</h1>
+<table style="width:100%">
+
+    <thead>
+  <tr >
+      <th width="20px">No</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+      <th>Gender</th>
+      <th>Birthday</th>
+    <th>Primary Email</th>
+      <th>Secondary Email</th>
+      <th>Telephone Number</th>
+      <th>Date joined</th>
+      <th>Leave days available</th>
+      <th>Department</th>
+      <th>Active</th>
+  </tr>
+  </thead>
+    <tbody>
     {% for user in queryset %}
-    <div>
-        <p>{{ user.name }} {{user.surname}} {{user.gender}}</p>
-        </div>
+    <tr >
+        <td width="20px" >{{ user.id }}</td>
+    <td >{{ user.name }}</td>
+    <td >{{ user.surname }}</td>
+    <td >{{ user.get_gender_display }}</td>
+    <td >{{ user.birthday }}</td>
+    <td style="width:15%">{{ user.primary_email }}</td>
+    <td style="width:15%">{{ user.secondary_email }}</td>
+    <td>{{ user.phone }}</td>
+    <td >{{ user.join_date }}</td>
+    <td >{{ user.leave_days_available }}</td>
+    <td >{{ user.department.name }}</td>
+    <td >{{ user.is_active }}</td>
+  </tr>
     {% endfor %}
-    </div>
+    </tbody>
+
+</table>
+
+
+
 </body>
 </html>

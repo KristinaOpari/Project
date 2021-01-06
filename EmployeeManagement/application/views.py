@@ -53,14 +53,14 @@ class HolidaysViewSet(viewsets.ModelViewSet):
 def export_users_excel(request):
     users_resource = UserResource()
     dataset = users_resource.export()
-    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    response = HttpResponse(dataset.xlsx, content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="users.xls"'
     return response
 
 def export_leave_request_excel(request):
     leaves_resource = LeaveResource()
     dataset = leaves_resource.export()
-    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    response = HttpResponse(dataset.xlsx, content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="leave_requests.xls"'
     return response
 

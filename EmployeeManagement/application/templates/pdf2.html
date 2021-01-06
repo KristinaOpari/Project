@@ -3,14 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Leave Request Report</title>
+
+<style>
+table, th, tr, td {
+  border: 1px solid black;
+  text-align:center;
+}
+th {
+  height: 70px;
+  background-color: orange;
+}
+td{
+height:40px;
+}
+
+
+</style>
 </head>
 <body>
-<div>
+<h1>LEAVE REQUEST REPORT</h1>
+<table style="width:100%">
+
+    <thead>
+  <tr >
+      <th width="20px">No</th>
+    <th>Firstname</th>
+      <th>Lastname</th>
+    <th>Email</th>
+      <th>Start of Leave</th>
+      <th>End of Leave</th>
+      <th>Duration</th>
+      <th>Reason</th>
+      <th>Status</th>
+      <th colspan="2">Approver</th>
+  </tr>
+  </thead>
+    <tbody>
     {% for leave in queryset %}
-    <div>
-        <p>{{ leave.user_id.name }} </p>
-        </div>
+    <tr >
+        <td width="20px" >{{ leave.id }}</td>
+    <td >{{ leave.user_id.name }}</td>
+    <td >{{ leave.user_id.surname }}</td>
+    <td style="width:15%">{{ leave.user_id.primary_email }}</td>
+    <td >{{ leave.start }}</td>
+    <td >{{ leave.end }}</td>
+    <td >{{ leave.duration }}</td>
+    <td style="width:15%">{{ leave.reason }}</td>
+    <td >{{ leave.get_status_display }}</td>
+    <td >{{ leave.approver.name }}</td>
+    <td >{{ leave.approver.surname }}</td>
+  </tr>
     {% endfor %}
-    </div>
+    </tbody>
+
+</table>
+
+
+
 </body>
 </html>
