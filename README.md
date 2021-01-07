@@ -23,3 +23,6 @@ Kristi - Kam akses
 
 06/01/2021
 -Bera modifikime ne html files qe u perdoren per tu eksportuar ne pdf files ne lidhje me users dhe leaves, ku ne pdf files do te tregohen ne formatin e tabelave.
+
+07/01/2021
+-Jam marre me popullimin e tabeles holidays duke perdorur nje file csv holidays.csv nepermjet scriptit. Te ky file kam vendosur te gjithe festat zyrtare te Shqiperise. Pasi kam lexuar file dhe kam krijuar objektet, duke perdorur nje for loop kam kontrolluar per rastet kur festat bien dite te shtune ose te diele, ku e hena do te jete pushim. Gjithashtu dhe rastin  kur bie e shtune dhe e diele te dyja festa dhe eshte dhe e hena dhe e marta perseri pushim. Keshtu qe pas objekteve te krijuara nga leximi i holidays.csv jane krijuar dhe objete te tjera shtese per ditet e pushim te hene ose te marte. 
