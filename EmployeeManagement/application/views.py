@@ -49,6 +49,16 @@ class UserRoleViewSet(viewsets.ModelViewSet):
 class HolidaysViewSet(viewsets.ModelViewSet):
     serializer_class=HolidaysSerializer
     queryset=Holidays.objects.all()
+    def create(self, request,*args, **kwargs):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+class RolesViewSet(viewsets.ModelViewSet):
+    serializer_class = RoleSerializer
+    queryset = Role.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 def export_users_excel(request):
     users_resource = UserResource()

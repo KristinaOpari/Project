@@ -81,6 +81,6 @@ class Account(models.Model):
 
 class Holidays(models.Model):
     date = models.DateField()
+    day_of_week=models.CharField(max_length=255,default="")
     name = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
-    last_active = models.DateField()
