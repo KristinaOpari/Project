@@ -7,7 +7,6 @@ router.register(r'users', views.UserViewSet, basename='user')
 router.register(r'departments',views.DepartmentViewSet,basename='department')
 router.register(r'leaveapply',views.LeaveApplyViewSet,basename='leaveapply')
 router.register(r'leaveapprove', views.LeaveApproveViewSet, basename='leaveapprove')
-router.register(r'accounts',views.AccountViewSet,basename='account')
 router.register(r'holidays', views.HolidaysViewSet,basename='holiday')
 router.register(r'roles',views.RolesViewSet,basename='role')
 

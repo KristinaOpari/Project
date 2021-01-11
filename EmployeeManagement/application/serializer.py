@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.get_gender_display()
 
     class Meta:
-        model=User
+        model=SystemUser
         fields='__all__'
 
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -43,10 +43,6 @@ class RoleSerializer(serializers.ModelSerializer):
         model=Role
         fields='__all__'
 
-class AccountSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Account
-        fields='__all__'
 
 class UserRoleSerializer(serializers.ModelSerializer):
     class Meta:

@@ -11,7 +11,7 @@ from xhtml2pdf import pisa
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = SystemUser.objects.all()
 
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
@@ -38,9 +38,6 @@ class LeaveApproveViewSet(viewsets.ModelViewSet):
     def create(self, request,*args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-class AccountViewSet(viewsets.ModelViewSet):
-    serializer_class=AccountSerializer
-    queryset=Account.objects.all()
 
 class UserRoleViewSet(viewsets.ModelViewSet):
     serializer_class = UserRoleSerializer

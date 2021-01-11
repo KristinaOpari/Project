@@ -130,14 +130,4 @@ REST_FRAMEWORK = {
 
 }
 IMPORT_EXPORT_USE_TRANSACTIONS = True
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
-EMAIL_HOST = "smtp.gmail.com"
-
-EMAIL_USE_TLS = True
-
-EMAIL_PORT = 587
-
-EMAIL_HOST_USER = "kristinaopari@gmail.com"
-
-EMAIL_HOST_PASSWORD = "mypassword"
+AUTH_USER_MODEL = "application.SystemUser"
