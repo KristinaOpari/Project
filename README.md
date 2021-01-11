@@ -26,3 +26,6 @@ Kristi - Kam akses
 
 07/01/2021
 -Jam marre me popullimin e tabeles holidays duke perdorur nje file csv holidays.csv nepermjet scriptit. Te ky file kam vendosur te gjithe festat zyrtare te Shqiperise. Pasi kam lexuar file dhe kam krijuar objektet, duke perdorur nje for loop kam kontrolluar per rastet kur festat bien dite te shtune ose te diele, ku e hena do te jete pushim. Gjithashtu dhe rastin  kur bie e shtune dhe e diele te dyja festa dhe eshte dhe e hena dhe e marta perseri pushim. Keshtu qe pas objekteve te krijuara nga leximi i holidays.csv jane krijuar dhe objete te tjera shtese per ditet e pushim te hene ose te marte. 
+
+11/01/2021
+-Sot u mora pak me modifikimin e modelit User duke e bere SystemUser qe te inherit nga AbstractUser, ku ka disa field vete nga inherit, por dhe shtova disa fields vete. Gjithashtu dhe modifikimet ne pjeset e tjera te projektit ku perdorej modeli User dhe fields qe kishte me pare, duke adaptuar me fields qe do te kete tani.
