@@ -9,7 +9,7 @@ router.register(r'leaveapply',views.LeaveApplyViewSet,basename='leaveapply')
 router.register(r'leaveapprove', views.LeaveApproveViewSet, basename='leaveapprove')
 router.register(r'holidays', views.HolidaysViewSet,basename='holiday')
 router.register(r'roles',views.RolesViewSet,basename='role')
-
+router.register(r'userroles', views.UserRoleViewSet,basename='userrole')
 
 urlpatterns=[
         path('',include(router.urls)),

@@ -28,6 +28,8 @@ class LeaveApplyViewSet(viewsets.ModelViewSet):
     serializer_class=LeaveApplySerializer
     queryset=Leave.objects.all()
 
+
+
 class LeaveApproveViewSet(viewsets.ModelViewSet):
     serializer_class=LeaveApproveSerializer
     queryset=Leave.objects.all()
@@ -37,6 +39,15 @@ class LeaveApproveViewSet(viewsets.ModelViewSet):
 
     def create(self, request,*args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        instance.deduct_leave_days()
+        return Response(serializer.data)
 
 
 class UserRoleViewSet(viewsets.ModelViewSet):
@@ -57,6 +68,7 @@ class RolesViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+
 def export_users_excel(request):
     users_resource = UserResource()
     dataset = users_resource.export()
@@ -73,7 +85,7 @@ def export_leave_request_excel(request):
 
 def export_users_pdf(request):
     template_path = 'pdf1.html'
-    queryset = User.objects.all()
+    queryset = SystemUser.objects.all()
     context = {'queryset': queryset}
 
     response = HttpResponse(content_type='application/pdf')

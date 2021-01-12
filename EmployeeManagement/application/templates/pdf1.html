@@ -44,14 +44,14 @@ height:40px;
     {% for user in queryset %}
     <tr >
         <td width="20px" >{{ user.id }}</td>
-    <td >{{ user.name }}</td>
-    <td >{{ user.surname }}</td>
+    <td >{{ user.first_name }}</td>
+    <td >{{ user.last_name }}</td>
     <td >{{ user.get_gender_display }}</td>
     <td >{{ user.birthday }}</td>
-    <td style="width:15%">{{ user.primary_email }}</td>
+    <td style="width:15%">{{ user.email }}</td>
     <td style="width:15%">{{ user.secondary_email }}</td>
     <td>{{ user.phone }}</td>
-    <td >{{ user.join_date }}</td>
+    <td >{{ user.date_joined }}</td>
     <td >{{ user.leave_days_available }}</td>
     <td >{{ user.department.name }}</td>
     <td >{{ user.is_active }}</td>

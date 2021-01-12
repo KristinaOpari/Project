@@ -1,18 +1,49 @@
+from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 import numpy as np
-from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractUser
 
+class UserManager(BaseUserManager):
+
+    use_in_migrations = True
+
+    def _create_user(self, email, password, **extra_fields):
+        if not email:
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(email, password, **extra_fields)
 
 class SystemUser(AbstractUser):
+    objects = UserManager()
     CHOICES_GENDER=(
         ('F', 'Female'),
         ('M', 'Male')
     )
-
+    username= None
+    password=models.CharField(max_length=255,default='ikub1234')
+    email = models.EmailField( unique=True)
+    secondary_email = models.EmailField(unique=True, default="")
     gender = models.CharField(max_length=10, choices=CHOICES_GENDER)
     birthday=models.DateField(blank=True,null=True)
-    secondary_email = models.EmailField(unique=True,default="")
     phone = models.CharField(max_length=255,blank=True,null=True)
     leave_days_available = models.IntegerField(default=28)
     department = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
@@ -20,21 +51,22 @@ class SystemUser(AbstractUser):
     is_Supervisor=models.BooleanField(default=False)
     is_Employee=models.BooleanField(default=True)
 
-    REQUIRED_FIELDS= ['email']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     def __str__(self):
         return self.first_name
 
-    # def save(self, *args, **kwargs):
-    #     super(User, self).save(*args, **kwargs)
-    #     account=Account.objects.create(user_id=self, password="ikub1234")
-    #     # send_mail(
-    #     #     'Account Activated',
-    #     #     'Please activate you account using: Email: ({}) Password:({})'.format(self.primary_email, account.password),
-    #     #     'noreply@gmail.com',
-    #     #     ['{}'.format(self.email)],
-    #     #     fail_silently=False
-    #     #
-    #     # )
+    def save(self, *args, **kwargs):
+        super(SystemUser, self).save(*args, **kwargs)
+        if(self.is_HR):
+            UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=1))
+        if(self.is_Supervisor):
+            UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=2))
+        if(self.is_Employee):
+            UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=3))
+
+
+
 
 class Department(models.Model):
     name = models.CharField(max_length=255)
@@ -75,7 +107,18 @@ class Leave(models.Model):
             duration=np.busday_count(self.start.strftime("%Y-%m-%d"),self.end.strftime("%Y-%m-%d"))
             return "{} days".format(duration)
 
-
+    def deduct_leave_days(self):
+        if self.status == 'A':
+            user = SystemUser.objects.get(pk=self.user_id.id)
+            nrdigits=0
+            digit=0
+            for ch in self.duration:
+                if ch.isdigit():
+                    digit=int(ch)
+                    nrdigits+=1
+            if nrdigits == 1:
+                user.leave_days_available = user.leave_days_available - digit
+                user.save()
 
 class Holidays(models.Model):
     date = models.DateField()

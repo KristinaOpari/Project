@@ -1,6 +1,6 @@
 import datetime
 
-from application.models import User,Department,Role, Holidays
+from application.models import SystemUser,Department,Role, Holidays
 import csv
 
 
@@ -79,7 +79,7 @@ def populate_holidays():
                 ).save()
 
 def delete():
-    User.objects.all().delete()
+    SystemUser.objects.all().delete()
     Department.objects.all().delete()
 
 

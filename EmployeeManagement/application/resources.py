@@ -15,6 +15,7 @@ class UserResource(resources.ModelResource):
     is_active=fields.Field(attribute='is_active', column_name=(u'Active'),widget=widgets.BooleanWidget())
     class Meta:
         model = SystemUser
+        exclude=['groups', 'user_permissions', 'password', 'is_staff', 'is_superuser', 'username']
         export_order = ('id', 'first_name', 'last_name', 'gender','birthday','email','secondary_email','phone','date_joined','leave_days_available','department','is_active')
 
 class LeaveResource(resources.ModelResource):

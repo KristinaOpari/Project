@@ -2,7 +2,8 @@ from django.contrib import admin
 
 from .models import *
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name','gender','birthday','date_joined','email','secondary_email','phone','leave_days_available','department','is_active')
+    fields= ('first_name','last_name','gender','birthday','date_joined','email','secondary_email','phone','leave_days_available', 'department', 'is_active','is_staff','is_superuser','is_HR','is_Supervisor','is_Employee','user_permissions','groups','password')
+
 admin.site.register(SystemUser,UserAdmin)
 
 class RoleAdmin(admin.ModelAdmin):
