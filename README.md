@@ -29,3 +29,6 @@ Kristi - Kam akses
 
 11/01/2021
 -Sot u mora pak me modifikimin e modelit User duke e bere SystemUser qe te inherit nga AbstractUser, ku ka disa field vete nga inherit, por dhe shtova disa fields vete. Gjithashtu dhe modifikimet ne pjeset e tjera te projektit ku perdorej modeli User dhe fields qe kishte me pare, duke adaptuar me fields qe do te kete tani.
+
+12/01/20212
+-Kam shtuar nje model per UserManager sepse bera si USERNAME_FIELD te SystemUser model field-in e emailit dhe kam hequr fare si field ate te username-it. Ne kete model gjithashtu kam bere override metoden save ne menyre qe kur te behet save te dhenat per userin do te krijoje rekorde te UserRole table nese is_hr eshte true is_Employee eshte true dhe e njejta per is_Supervisor. Gjithashtu u mora me funksionin qe ne momentin qe aprovohet leja e nje user-i qe ka kerkuar leje per 1 dite ose me shume, te leave_days_available te zbritet numri i diteve qe do te jete me leje. Dhe te serializer.py kame bere disa modifikime vetem ne lidhje me paraqitjen e te dhenave te userave,lejeve etj. 
