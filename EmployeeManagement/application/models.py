@@ -2,6 +2,8 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 import numpy as np
 from django.contrib.auth.models import AbstractUser
+from django.db.models import Q
+
 
 class UserManager(BaseUserManager):
 
@@ -39,7 +41,6 @@ class SystemUser(AbstractUser):
         ('M', 'Male')
     )
     username= None
-    password=models.CharField(max_length=255,default='ikub1234')
     email = models.EmailField( unique=True)
     secondary_email = models.EmailField(unique=True, default="")
     gender = models.CharField(max_length=10, choices=CHOICES_GENDER)
@@ -50,20 +51,30 @@ class SystemUser(AbstractUser):
     is_HR=models.BooleanField(default=False)
     is_Supervisor=models.BooleanField(default=False)
     is_Employee=models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name','last_name']
     def __str__(self):
         return self.first_name
 
     def save(self, *args, **kwargs):
         super(SystemUser, self).save(*args, **kwargs)
         if(self.is_HR):
-            UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=1))
+            if UserRole.objects.filter(Q(role_id=1) & Q(user_id=self)).exists():
+                pass
+            else:
+                UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=1))
         if(self.is_Supervisor):
-            UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=2))
+            if UserRole.objects.filter(Q(role_id=2) & Q(user_id=self)).exists():
+                pass
+            else:
+                UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=2))
         if(self.is_Employee):
-            UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=3))
+            if UserRole.objects.filter(Q(role_id=3) & Q(user_id=self)).exists():
+                pass
+            else:
+                UserRole.objects.create(user_id=self, role_id=Role.objects.get(pk=3))
 
 
 
@@ -71,7 +82,7 @@ class SystemUser(AbstractUser):
 class Department(models.Model):
     name = models.CharField(max_length=255)
     parentDepartment_id = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
-    supervisor=models.ForeignKey('SystemUser', on_delete=models.CASCADE, related_name='supervisor',default="", blank=True, null=True) #limit_choices_to
+    supervisor=models.ForeignKey('SystemUser', on_delete=models.CASCADE, related_name='supervisor',default="", blank=True, null=True)
     def __str__(self):
         return self.name
 
