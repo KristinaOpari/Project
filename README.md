@@ -32,3 +32,7 @@ Kristi - Kam akses
 
 12/01/20212
 -Kam shtuar nje model per UserManager sepse bera si USERNAME_FIELD te SystemUser model field-in e emailit dhe kam hequr fare si field ate te username-it. Ne kete model gjithashtu kam bere override metoden save ne menyre qe kur te behet save te dhenat per userin do te krijoje rekorde te UserRole table nese is_hr eshte true is_Employee eshte true dhe e njejta per is_Supervisor. Gjithashtu u mora me funksionin qe ne momentin qe aprovohet leja e nje user-i qe ka kerkuar leje per 1 dite ose me shume, te leave_days_available te zbritet numri i diteve qe do te jete me leje. Dhe te serializer.py kame bere disa modifikime vetem ne lidhje me paraqitjen e te dhenave te userave,lejeve etj. 
+
+13/01/2021
+-Bera nje ndryshim ne override te save method per userin qe te krijonte nje record te ri te UserRole vetem ne qofte se ai rekord nuk ekzisonte me pare. Me tej ne secilin viewset kam vendosur authenitcation classes ku e kam vendosur basic authentiaction qe ne momentin qe do aksesohet nje url duhet qe credentials te nje useri te merren dhe ne baze te userit te loguar do te behen veprimet. Per shembull ne momentin qe do te kerkohet leja user_id e tabeles Leave do te merret useri qe eshte i loguar ne sistem, per ta bere kete kam bere override metodat perform_create dhe perform_update aty ku nevojiteshin. Gjithashtu u mora me krijimin e nje view ne momentin qe useri do te ndryshoje passwordin. 
+Po shikoj dhe opsionin qe useri te kerkoje reset-im te passwordit.
