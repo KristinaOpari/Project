@@ -1,20 +1,40 @@
 
 from rest_framework.permissions import IsAuthenticated
 
+from .permissions import IsEmployee, IsHr, IsSupervisor
 from .resources import *
 from rest_framework.response import Response
 from .models import *
 from .serializer import *
 from rest_framework import viewsets, status, generics, authentication
-
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    queryset = SystemUser.objects.all()
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = (authentication.SessionAuthentication,)
+
+    def get_queryset(self):
+        if self.request.user.is_HR:
+            self.queryset = SystemUser.objects.all()
+        elif self.request.user.is_Supervisor:
+            self.queryset = SystemUser.objects.filter(department=self.request.user.department)
+        elif self.request.user.is_Employee:
+            self.queryset = SystemUser.objects.filter(id=self.request.user.id)
+        return self.queryset
+
+    def get_permissions(self):
+        if self.action == 'create' or self.action == 'update' or self.action == 'destroy':
+            self.permission_classes=[IsAuthenticated,IsHr, ]
+        elif self.action == 'list':
+            if self.request.user.is_HR:
+                self.permission_classes = [IsAuthenticated, IsHr, ]
+            if self.request.user.is_Supervisor:
+                self.permission_classes = [IsAuthenticated, IsSupervisor, ]
+            elif self.request.user.is_Employee:
+                self.permission_classes = [IsAuthenticated,IsEmployee, ]
+        return super(self.__class__, self).get_permissions()
 
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
@@ -27,6 +47,7 @@ class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     model = SystemUser
     permission_classes = (IsAuthenticated,)
+    authentication_classes = (authentication.SessionAuthentication,)
 
     def get_object(self, queryset=None):
         obj = self.request.user
@@ -39,7 +60,7 @@ class ChangePasswordView(generics.UpdateAPIView):
         if serializer.is_valid():
             if not self.object.check_password(serializer.data.get("old_password")):
                 return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
-            # set_password also hashes the password that the user will get
+
             self.object.set_password(serializer.data.get("new_password"))
             self.object.save()
             response = {
@@ -56,25 +77,63 @@ class ChangePasswordView(generics.UpdateAPIView):
 class DepartmentViewSet(viewsets.ModelViewSet):
     serializer_class=DepartmentSerializer
     queryset=Department.objects.all()
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,IsHr)
+    authentication_classes = (authentication.SessionAuthentication,)
+
+
 
 class LeaveApplyViewSet(viewsets.ModelViewSet):
+
+    authentication_classes = (authentication.SessionAuthentication,)
+
+    def get_queryset(self):
+        if self.request.user.is_HR :
+            self.queryset = Leave.objects.all()
+        elif self.request.user.is_Supervisor:
+            self.queryset = Leave.objects.filter(user_id__department=self.request.user.department)
+        elif self.request.user.is_Employee:
+            self.queryset = Leave.objects.filter(user_id=self.request.user.id)
+        return self.queryset
+
+    def get_permissions(self):
+        if self.action == 'create' or self.action == 'list' or self.action == 'retrieve' or self.action == 'destroy':
+            if self.request.user.is_HR:
+                self.permission_classes = [IsAuthenticated, IsHr, ]
+            elif self.request.user.is_Supervisor:
+                self.permission_classes = [IsAuthenticated,IsSupervisor, ]
+            elif self.request.user.is_Employee:
+                self.permission_classes = [IsAuthenticated,IsEmployee, ]
+        return super(self.__class__, self).get_permissions()
+
     serializer_class=LeaveApplySerializer
-    queryset=Leave.objects.all()
-    authentication_classes = (authentication.BasicAuthentication,)
-    permission_classes = (IsAuthenticated,)
+
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user)
 
-    def perform_update(self, serializer):
-        serializer.save(user_id=self.request.user)
+    def update(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class LeaveApproveViewSet(viewsets.ModelViewSet):
-    serializer_class=LeaveApproveSerializer
-    queryset=Leave.objects.all()
-    authentication_classes = (authentication.BasicAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = (authentication.SessionAuthentication, )
 
+    def get_queryset(self):
+        if self.request.user.is_HR and self.request.user.is_Supervisor or self.request.user.is_HR:
+            self.queryset=Leave.objects.all()
+        elif self.request.user.is_Supervisor:
+            self.queryset=Leave.objects.filter(user_id__department = self.request.user.department)
+        return self.queryset
+
+    def get_permissions(self):
+        if self.action == 'update' or self.action == 'retrieve':
+            if self.request.user.is_HR:
+                self.permission_classes = [IsAuthenticated,IsHr,]
+            elif self.request.user.is_Supervisor:
+                self.permission_classes = [IsAuthenticated,IsSupervisor, ]
+
+        return super(self.__class__, self).get_permissions()
+
+
+    serializer_class = LeaveApproveSerializer
     def perform_update(self, serializer):
         serializer.save(approver=self.request.user)
 
@@ -97,22 +156,22 @@ class LeaveApproveViewSet(viewsets.ModelViewSet):
 class UserRoleViewSet(viewsets.ModelViewSet):
     serializer_class = UserRoleSerializer
     queryset=UserRole.objects.all()
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (authentication.BasicAuthentication,)
+    permission_classes = (IsAuthenticated,IsHr)
+    authentication_classes = (authentication.SessionAuthentication,)
 
 class HolidaysViewSet(viewsets.ModelViewSet):
     serializer_class=HolidaysSerializer
     queryset=Holidays.objects.all()
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (authentication.BasicAuthentication,)
+    permission_classes = (IsAuthenticated,IsHr)
+    authentication_classes = (authentication.SessionAuthentication,)
     def create(self, request,*args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class RolesViewSet(viewsets.ModelViewSet):
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (authentication.BasicAuthentication,)
+    permission_classes = (IsAuthenticated,IsHr)
+    authentication_classes = (authentication.SessionAuthentication,)
     def create(self, request, *args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
