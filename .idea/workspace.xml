@@ -3,10 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="5c4f4568-ebcf-4a15-a6ec-610ac44c404a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/EmployeeManagement/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/EmployeeManagement/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/serializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/templates/pdf2.html" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/templates/pdf2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EmployeeManagement/application/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/application/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/EmployeeManagement/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -38,7 +41,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../webapplication" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="SvnConfiguration">
@@ -63,18 +66,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="112" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1610574616680" />
-    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1609968991424">
+    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1610991039037">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1609968991424" />
+    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1610991039037" />
     <state x="184" y="7" key="SettingsEditor" timestamp="1609672577835">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="7" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1609672577835" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1610634234398">
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1610987102437">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1610634234398" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1610987102437" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1609255743090">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

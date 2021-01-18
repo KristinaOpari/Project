@@ -46,7 +46,7 @@ class SystemUser(AbstractUser):
     gender = models.CharField(max_length=10, choices=CHOICES_GENDER)
     birthday=models.DateField(blank=True,null=True)
     phone = models.CharField(max_length=255,blank=True,null=True)
-    leave_days_available = models.IntegerField(default=28)
+    leave_hours_available = models.IntegerField(default=160)
     department = models.ForeignKey('Department', on_delete=models.CASCADE, blank=True, null=True)
     is_HR=models.BooleanField(default=False)
     is_Supervisor=models.BooleanField(default=False)
@@ -95,7 +95,7 @@ class UserRole(models.Model):
     role_id=models.ForeignKey(Role,on_delete=models.CASCADE,default=1)
     user_id=models.ForeignKey(SystemUser,on_delete=models.CASCADE,default=1)
 
-class Leave(models.Model):
+class Leave(models.Model): #duration dhe status, duration vtm ne hours status shikoje kur behet approve
 
     LEAVE_STATUS_CHOICES = (
         ('A', 'Approved'),
@@ -106,30 +106,24 @@ class Leave(models.Model):
     start=models.DateTimeField()
     end= models.DateTimeField()
     reason=models.CharField(max_length=255)
-    status=models.CharField(max_length=255,blank=True, null=True,choices=LEAVE_STATUS_CHOICES,default='P')
+    status=models.CharField(max_length=255,blank=True, null=True,choices=LEAVE_STATUS_CHOICES)
     approver=models.ForeignKey(SystemUser,on_delete=models.CASCADE, related_name='approver',blank=True,null=True)
 
     @property
     def duration(self):
         if self.start.date() == self.end.date():
             duration=self.end - self.start
-            return "{} hours {} minutes ".format(duration.seconds//3600,(duration.seconds//60)%60)
+            return "{} hours ".format(duration.seconds//3600)
         else:
-            duration=np.busday_count(self.start.strftime("%Y-%m-%d"),self.end.strftime("%Y-%m-%d"))
-            return "{} days".format(duration)
+            duration=np.busday_count(self.start.strftime("%Y-%m-%d"), self.end.strftime("%Y-%m-%d"))
+            return "{} hours".format(duration*8)
 
-    def deduct_leave_days(self):
+    def deduct_leave_hours(self):
         if self.status == 'A':
             user = SystemUser.objects.get(pk=self.user_id.id)
-            nrdigits=0
-            digit=0
-            for ch in self.duration:
-                if ch.isdigit():
-                    digit=int(ch)
-                    nrdigits+=1
-            if nrdigits == 1:
-                user.leave_days_available = user.leave_days_available - digit
-                user.save()
+            digit= int(self.duration[0])
+            user.leave_hours_available = user.leave_hours_available - digit
+            user.save()
 
 class Holidays(models.Model):
     date = models.DateField()

@@ -1,14 +1,17 @@
-from django.db.models import Q
 from rest_framework import serializers
 from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
     department = serializers.SlugRelatedField(queryset=Department.objects.all(), slug_field='name',allow_null=True)
+    password= serializers.CharField(write_only=True)
+    phone=serializers.RegexField(initial= "+355 6XXXXXXXX",regex="^\\+355 6\\d{}$" , max_length=None, min_length=None, allow_blank=False)
+    leave_hours_available=serializers.IntegerField(initial=160)
+
 
     class Meta:
         model=SystemUser
-        fields=["first_name","last_name","password","gender","birthday","email","secondary_email","phone","is_active","is_staff","is_HR","is_Supervisor","is_Employee","leave_days_available","department","user_permissions"]
+        fields=["id","first_name","last_name","email","password","gender","birthday","secondary_email","phone","is_active","is_staff","is_HR","is_Supervisor","is_Employee","leave_hours_available","department"]
         read_only_fields=['groups','date_joined','last_login','is_superuser']
 
 
@@ -32,26 +35,21 @@ class DepartmentSerializer(serializers.ModelSerializer):
         model=Department
         fields='__all__'
 
-class LeaveApplySerializer(serializers.ModelSerializer):
+class LeaveSerializer(serializers.ModelSerializer):
     duration=serializers.ReadOnlyField()
-    approver = serializers.SlugRelatedField(read_only=True, slug_field='first_name')
-    status = serializers.ChoiceField(read_only=True,choices=Leave.LEAVE_STATUS_CHOICES, source='get_status_display')
-    user_id = serializers.SlugRelatedField(read_only=True, slug_field='first_name')
-
+    approver = serializers.SlugRelatedField(read_only=True,slug_field='first_name')
+    status = serializers.ChoiceField(read_only=True,choices=Leave.LEAVE_STATUS_CHOICES,source='get_status_display')
+    user_id = serializers.SlugRelatedField(read_only=True,slug_field='first_name')
     class Meta:
         model=Leave
         fields='__all__'
-        read_only_fields = ('approver','status','duration','user_id')
 
-
-class LeaveApproveSerializer(serializers.ModelSerializer):
-    status = serializers.ChoiceField(choices=Leave.LEAVE_STATUS_CHOICES, source='get_status_display')
-    approver = serializers.SlugRelatedField(read_only=True, slug_field='first_name')
-    user_id = serializers.SlugRelatedField(read_only=True, slug_field='first_name')
+class LeaveSerializerUpdate(serializers.ModelSerializer):
+    approver = serializers.SlugRelatedField(read_only=True,slug_field='first_name')
+    status = serializers.ChoiceField(choices=Leave.LEAVE_STATUS_CHOICES, )
     class Meta:
         model=Leave
-        fields="__all__"
-        read_only_fields=('user_id','start','end','reason','approver')
+        fields=['status','approver']
 
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:

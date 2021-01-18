@@ -42,16 +42,16 @@ height:40px;
     {% for leave in queryset %}
     <tr >
         <td width="20px" >{{ leave.id }}</td>
-    <td >{{ leave.user_id.name }}</td>
-    <td >{{ leave.user_id.surname }}</td>
-    <td style="width:15%">{{ leave.user_id.primary_email }}</td>
+    <td >{{ leave.user_id.first_name }}</td>
+    <td >{{ leave.user_id.last_name }}</td>
+    <td style="width:15%">{{ leave.user_id.email }}</td>
     <td >{{ leave.start }}</td>
     <td >{{ leave.end }}</td>
     <td >{{ leave.duration }}</td>
     <td style="width:15%">{{ leave.reason }}</td>
     <td >{{ leave.get_status_display }}</td>
-    <td >{{ leave.approver.name }}</td>
-    <td >{{ leave.approver.surname }}</td>
+    <td >{{ leave.approver.first_name }}</td>
+    <td >{{ leave.approver.last_name }}</td>
   </tr>
     {% endfor %}
     </tbody>
