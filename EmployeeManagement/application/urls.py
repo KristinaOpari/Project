@@ -12,7 +12,7 @@ router.register(r'roles',views.RolesViewSet,basename='role')
 router.register(r'userroles', views.UserRoleViewSet,basename='userrole')
 
 urlpatterns=[
-        path('',include(router.urls)),
+        path('api/',include(router.urls)),
         path('export/users/excel', views.export_users_excel, name='export_excel_users'),
         path('export/leaves/excel', views.export_leave_request_excel, name='export_excel_leaves'),
         path('export/users/pdf',views.export_users_pdf,name='export_users_pdf'),

@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import *
 class UserAdmin(admin.ModelAdmin):
-    fields= ('first_name','last_name','gender','birthday','date_joined','email','secondary_email','phone','leave_days_available', 'department', 'is_active','is_staff','is_superuser','is_HR','is_Supervisor','is_Employee','user_permissions','groups','password')
+    fields= ('first_name','last_name','gender','birthday','date_joined','email','secondary_email','phone','leave_hours_available', 'department', 'is_active','is_staff','is_superuser','is_HR','is_Supervisor','is_Employee','user_permissions','groups','password')
 
 admin.site.register(SystemUser,UserAdmin)
 

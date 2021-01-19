@@ -1,7 +1,5 @@
 
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
-
 from .permissions import IsEmployee, IsHr, IsSupervisor
 from .resources import *
 from rest_framework.response import Response
@@ -11,13 +9,11 @@ from rest_framework import viewsets, status, generics, authentication
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from django.shortcuts import render
 
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     authentication_classes = (authentication.SessionAuthentication,)
-
 
     def get_queryset(self):
         if self.request.user.is_HR:
@@ -39,13 +35,6 @@ class UserViewSet(viewsets.ModelViewSet):
             elif self.request.user.is_Employee:
                 self.permission_classes = [IsAuthenticated,IsEmployee, ]
         return super(self.__class__, self).get_permissions()
-
-    # serializeddata = UserSerializer(get_queryset, many=True)
-    # renderer_classes = (JSONRenderer, TemplateHTMLRenderer,)
-    # template_name = "my.html"
-
-    # def get(self, request, *args, **kwargs):
-    #     return render(self.request,self.template_name, {'data': self.serializeddata.data})
 
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()

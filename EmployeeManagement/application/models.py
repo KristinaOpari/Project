@@ -42,8 +42,8 @@ class SystemUser(AbstractUser):
     )
     username= None
     email = models.EmailField( unique=True)
-    secondary_email = models.EmailField(unique=True, default="")
-    gender = models.CharField(max_length=10, choices=CHOICES_GENDER)
+    secondary_email = models.EmailField(unique=True, default="",null=True)
+    gender = models.CharField(max_length=10, choices=CHOICES_GENDER,null=True)
     birthday=models.DateField(blank=True,null=True)
     phone = models.CharField(max_length=255,blank=True,null=True)
     leave_hours_available = models.IntegerField(default=160)
@@ -102,10 +102,17 @@ class Leave(models.Model): #duration dhe status, duration vtm ne hours status sh
         ('R','Rejected'),
         ('P', 'Pending'),
     )
+
+    REASON_CHOICES=(
+        ('1','Personal'),
+        ('2', 'Sick'),
+        ('3', 'Family'),
+        ('4', 'Vacation')
+    )
     user_id=models.ForeignKey(SystemUser, on_delete=models.CASCADE)
     start=models.DateTimeField()
     end= models.DateTimeField()
-    reason=models.CharField(max_length=255)
+    reason=models.CharField(max_length=255,choices=REASON_CHOICES)
     status=models.CharField(max_length=255,blank=True, null=True,choices=LEAVE_STATUS_CHOICES)
     approver=models.ForeignKey(SystemUser,on_delete=models.CASCADE, related_name='approver',blank=True,null=True)
 
