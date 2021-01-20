@@ -43,7 +43,10 @@ Po shikoj dhe opsionin qe useri te kerkoje reset-im te passwordit.
 18/01/2021
 -Bera modifikime te serializer.py ne lidhje me formatin e numrit te telefonit te userave qe te jete ne formatin e numrave shqiptar. Gjithashtu ndryshove nag leave_days_available ne leave_hours_available ne menyre qe edhe deduction te behet ne hours dhe jo vetem ne days. Gjithashtu bera nje ndryshim ne viewset ku bera vetem nje LeaveViewSet dhe ndryshimi i serializers ne momentin qe kemi per te bere update, ku duhet te shfaqet vetem status field per tu ndryshuar.
 
-19/02/2021
+19/01/2021
 -U mora pak me detaje ne lidhje me paraqitjen e te dhenave ne view, per shembull ne rastin e arsyes se lejes te paraqitjes nje dropdown per disa nga opsionet. Gjithashtu te pjesa e Leaves, duke qene se kemi disa role, Hr, Supervisor dhe Employee bera nje ndryshim ne lidhje me cfare te dhenash i paraqiten secilit rol, ku secilit i paraqiten leave qe kane maree vete dhe nese i jane bere approve apo jo dhe gjithashtu te gjithe pending leaves ne rastin e HR dhe SUpervisor qe kane ata per te aprovuar.
+
+20/01/2021
+-Po merrem tani me pjesen e UI, dhe po shikoja templates te Django ku per viewsets mund te caktonim renderer_classes dhe po beja prova duke pare TemplateHTMLRenderer, por me dolen probleme ne lidhje me shfaqjen duke me nxjerre errorin "context should be dict and not ReturnList". GJithashtu provoa dhe AdminRenderer qe e nxjerr informacionin ne menyre me te organizuar ne forme tabelash. 
 
 
