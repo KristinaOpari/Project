@@ -1,5 +1,7 @@
 
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import TemplateHTMLRenderer, AdminRenderer, JSONRenderer, BrowsableAPIRenderer
+
 from .permissions import IsEmployee, IsHr, IsSupervisor
 from .resources import *
 from rest_framework.response import Response
@@ -14,6 +16,8 @@ from xhtml2pdf import pisa
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     authentication_classes = (authentication.SessionAuthentication,)
+    #renderer_classes = [JSONRenderer, BrowsableAPIRenderer,TemplateHTMLRenderer,]
+    renderer_classes=[AdminRenderer]
 
     def get_queryset(self):
         if self.request.user.is_HR:
@@ -36,11 +40,36 @@ class UserViewSet(viewsets.ModelViewSet):
                 self.permission_classes = [IsAuthenticated,IsEmployee, ]
         return super(self.__class__, self).get_permissions()
 
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.filter_queryset(self.get_queryset())
+    #
+    #     if request.accepted_renderer.format == 'html':
+    #         users=list()
+    #
+    #         for user in queryset:
+    #             users.append({"serializer":self.get_serializer(),"user":user})
+    #         return Response(
+    #             {
+    #                 "users-info":users,
+    #                 "style" : {"template_pack":"rest_framewokr/inline/"}
+    #             },
+    #             template_name= "myapp/users_list.html"
+    #         )
+    #     else:
+    #         page = self.paginate_queryset(queryset)
+    #         if page is not None:
+    #             serializer = self.get_serializer(page, many=True)
+    #             return self.get_paginated_response(serializer.data)
+    #
+    #         serializer = self.get_serializer(queryset, many=True)
+    #     return Response(serializer.data)
+
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
         user.is_active = False
         user.save()
         return Response(data='User deleted')
+
 
 class ChangePasswordView(generics.UpdateAPIView):
 
@@ -48,6 +77,7 @@ class ChangePasswordView(generics.UpdateAPIView):
     model = SystemUser
     permission_classes = (IsAuthenticated,)
     authentication_classes = (authentication.SessionAuthentication,)
+    renderer_classes = [AdminRenderer]
 
     def get_object(self, queryset=None):
         obj = self.request.user
@@ -79,6 +109,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     queryset=Department.objects.all()
     permission_classes = (IsAuthenticated,IsHr)
     authentication_classes = (authentication.SessionAuthentication,)
+    renderer_classes = [AdminRenderer]
 
 
 
@@ -86,6 +117,7 @@ class LeaveViewSet(viewsets.ModelViewSet):
 
     authentication_classes = (authentication.SessionAuthentication,)
     serializer_class = LeaveSerializer
+    renderer_classes = [AdminRenderer]
 
     def get_serializer_class(self):
         serializer_class = self.serializer_class
@@ -141,20 +173,25 @@ class UserRoleViewSet(viewsets.ModelViewSet):
     queryset=UserRole.objects.all()
     permission_classes = (IsAuthenticated,IsHr, )
     authentication_classes = (authentication.SessionAuthentication,)
+    renderer_classes = [AdminRenderer]
 
 class HolidaysViewSet(viewsets.ModelViewSet):
     serializer_class=HolidaysSerializer
     queryset=Holidays.objects.all()
     permission_classes = (IsAuthenticated,IsHr, )
     authentication_classes = (authentication.SessionAuthentication,)
+    renderer_classes = [AdminRenderer]
     def create(self, request,*args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
 
 class RolesViewSet(viewsets.ModelViewSet):
     serializer_class = RoleSerializer
     queryset = Role.objects.all()
     permission_classes = (IsAuthenticated,IsHr, )
     authentication_classes = (authentication.SessionAuthentication,)
+    renderer_classes = [AdminRenderer]
     def create(self, request, *args, **kwargs):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
