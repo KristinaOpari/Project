@@ -12,12 +12,18 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
-
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     authentication_classes = (authentication.SessionAuthentication,)
-    #renderer_classes = [JSONRenderer, BrowsableAPIRenderer,TemplateHTMLRenderer,]
     renderer_classes=[AdminRenderer]
+    permission_classes = (IsAuthenticated,IsHr, )
+
+    def get_serializer_class(self):
+        serializer_class = self.serializer_class
+        if self.action == 'update':
+            serializer_class=UserUpdateSerializer
+
+        return serializer_class
 
     def get_queryset(self):
         if self.request.user.is_HR:
@@ -34,35 +40,11 @@ class UserViewSet(viewsets.ModelViewSet):
         elif self.action == 'list':
             if self.request.user.is_HR:
                 self.permission_classes = [IsAuthenticated, IsHr, ]
-            if self.request.user.is_Supervisor:
+            elif self.request.user.is_Supervisor:
                 self.permission_classes = [IsAuthenticated, IsSupervisor, ]
             elif self.request.user.is_Employee:
                 self.permission_classes = [IsAuthenticated,IsEmployee, ]
         return super(self.__class__, self).get_permissions()
-
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #
-    #     if request.accepted_renderer.format == 'html':
-    #         users=list()
-    #
-    #         for user in queryset:
-    #             users.append({"serializer":self.get_serializer(),"user":user})
-    #         return Response(
-    #             {
-    #                 "users-info":users,
-    #                 "style" : {"template_pack":"rest_framewokr/inline/"}
-    #             },
-    #             template_name= "myapp/users_list.html"
-    #         )
-    #     else:
-    #         page = self.paginate_queryset(queryset)
-    #         if page is not None:
-    #             serializer = self.get_serializer(page, many=True)
-    #             return self.get_paginated_response(serializer.data)
-    #
-    #         serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
@@ -107,50 +89,56 @@ class ChangePasswordView(generics.UpdateAPIView):
 class DepartmentViewSet(viewsets.ModelViewSet):
     serializer_class=DepartmentSerializer
     queryset=Department.objects.all()
-    permission_classes = (IsAuthenticated,IsHr)
     authentication_classes = (authentication.SessionAuthentication,)
     renderer_classes = [AdminRenderer]
+    permission_classes = (IsAuthenticated,IsHr,)
+
+    def get_permissions(self):
+        if(self.request.user.is_Supervisor):
+            self.permission_classes=(IsAuthenticated,IsSupervisor,)
+        return super(self.__class__, self).get_permissions()
 
 
 
 class LeaveViewSet(viewsets.ModelViewSet):
 
     authentication_classes = (authentication.SessionAuthentication,)
-    serializer_class = LeaveSerializer
+    serializer_class = LeaveSerializerCreate
     renderer_classes = [AdminRenderer]
+    permission_classes = (IsAuthenticated,IsHr)
 
     def get_serializer_class(self):
         serializer_class = self.serializer_class
 
         if self.request.method == 'PUT':
             serializer_class = LeaveSerializerUpdate
+        if self.action== "list":
+            serializer_class=LeaveSerializerList
 
         return serializer_class
     def get_queryset(self):
         if self.request.user.is_HR :
-            self.queryset = Leave.objects.filter(Q(status="P") | Q(user_id=self.request.user.id))
+            self.queryset = Leave.objects.filter(Q(status="P") & Q(user_id__is_Supervisor= True) )
         elif self.request.user.is_Supervisor:
-            self.queryset = Leave.objects.filter(Q(user_id__department=self.request.user.department) & Q(status="A") | Q(user_id=self.request.user.id))
-        elif self.request.user.is_Employee:
-            self.queryset = Leave.objects.filter(user_id=self.request.user.id)
+            self.queryset = Leave.objects.filter(Q(user_id__department=self.request.user.department) & Q(status="P") )
+
         return self.queryset
 
     def get_permissions(self):
-        if self.action == 'create' or self.action == 'list' or self.action == 'retrieve' or self.action == 'destroy':
+        if self.action == 'create':
             if self.request.user.is_HR:
                 self.permission_classes = [IsAuthenticated, IsHr, ]
             elif self.request.user.is_Supervisor:
                 self.permission_classes = [IsAuthenticated,IsSupervisor, ]
             elif self.request.user.is_Employee:
                 self.permission_classes = [IsAuthenticated,IsEmployee, ]
-        elif self.action == 'update':
+        elif self.action == 'update'  or self.action == 'retrieve' or self.action == 'list' or self.action == 'destroy':
             if self.request.user.is_HR:
                 self.permission_classes = [IsAuthenticated, IsHr, ]
             elif self.request.user.is_Supervisor:
                 self.permission_classes = [IsAuthenticated,IsSupervisor, ]
 
         return super(self.__class__, self).get_permissions()
-
 
 
     def perform_create(self, serializer):
@@ -167,6 +155,21 @@ class LeaveViewSet(viewsets.ModelViewSet):
         self.perform_update(serializer)
         instance.deduct_leave_hours()
         return Response(serializer.data)
+
+
+class LeaveListView(generics.ListAPIView):
+    serializer_class = LeaveSerializerList
+    model = Leave
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (authentication.SessionAuthentication,)
+    renderer_classes = [AdminRenderer]
+    def get_queryset(self):
+        self.queryset=Leave.objects.filter(user_id=self.request.user.id)
+        return self.queryset
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
 
 class UserRoleViewSet(viewsets.ModelViewSet):
     serializer_class = UserRoleSerializer
@@ -226,7 +229,6 @@ def export_users_pdf(request):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
 
 def export_leaves_pdf(request):
     template_path = 'pdf2.html'

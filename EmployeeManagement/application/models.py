@@ -113,7 +113,7 @@ class Leave(models.Model): #duration dhe status, duration vtm ne hours status sh
     start=models.DateTimeField()
     end= models.DateTimeField()
     reason=models.CharField(max_length=255,choices=REASON_CHOICES)
-    status=models.CharField(max_length=255,blank=True, null=True,choices=LEAVE_STATUS_CHOICES)
+    status=models.CharField(max_length=255,blank=True, null=True,choices=LEAVE_STATUS_CHOICES,default="P")
     approver=models.ForeignKey(SystemUser,on_delete=models.CASCADE, related_name='approver',blank=True,null=True)
 
     @property

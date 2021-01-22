@@ -35,7 +35,7 @@ height:40px;
       <th>Duration</th>
       <th>Reason</th>
       <th>Status</th>
-      <th colspan="2">Approver</th>
+      <th colspan="2">Approver/Rejector</th>
   </tr>
   </thead>
     <tbody>
@@ -48,7 +48,7 @@ height:40px;
     <td >{{ leave.start }}</td>
     <td >{{ leave.end }}</td>
     <td >{{ leave.duration }}</td>
-    <td style="width:15%">{{ leave.reason }}</td>
+    <td style="width:15%">{{ leave.get_reason_display }}</td>
     <td >{{ leave.get_status_display }}</td>
     <td >{{ leave.approver.first_name }}</td>
     <td >{{ leave.approver.last_name }}</td>

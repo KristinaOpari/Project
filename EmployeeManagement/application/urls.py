@@ -5,8 +5,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet, basename='user')
 router.register(r'departments',views.DepartmentViewSet,basename='department')
-router.register(r'leave',views.LeaveViewSet,basename='leaveapply')
-#router.register(r'leave/approve', views.LeaveApproveViewSet, basename='leaveapprove')
+router.register(r'leave',views.LeaveViewSet,basename='leave')
 router.register(r'holidays', views.HolidaysViewSet,basename='holiday')
 router.register(r'roles',views.RolesViewSet,basename='role')
 router.register(r'userroles', views.UserRoleViewSet,basename='userrole')
@@ -18,5 +17,6 @@ urlpatterns=[
         path('export/users/pdf',views.export_users_pdf,name='export_users_pdf'),
         path('export/leaves/pdf',views.export_leaves_pdf,name='export_leaves_pdf'),
         path('api/change-password/', views.ChangePasswordView.as_view(), name='change-password'),
+        path('api/leaves-personal/',views.LeaveListView.as_view(),name='leave-list-personal'),
 
 ]
