@@ -49,4 +49,8 @@ Po shikoj dhe opsionin qe useri te kerkoje reset-im te passwordit.
 20/01/2021
 -Po merrem tani me pjesen e UI, dhe po shikoja templates te Django ku per viewsets mund te caktonim renderer_classes dhe po beja prova duke pare TemplateHTMLRenderer, por me dolen probleme ne lidhje me shfaqjen duke me nxjerre errorin "context should be dict and not ReturnList". GJithashtu provoa dhe AdminRenderer qe e nxjerr informacionin ne menyre me te organizuar ne forme tabelash. 
 
+22/01/2021
+-Bera disa ndryshime te serializers.py dhe views.py per shkak te disa bug qe dilnin gjate ekzekutimit. Lashe perseri AdminRenderer per te shfaqur informacionin sipas vete nderfaqes se Django.
+
+
 
